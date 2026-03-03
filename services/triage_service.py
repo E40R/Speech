@@ -38,4 +38,5 @@ class TriageOutput(BaseModel):
 
     safety_flags: List[str] = Field(
         description="Independent safety triggers detected from symptoms (e.g., 'bleeding_present')."
+
     )
