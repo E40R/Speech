@@ -61,7 +61,6 @@ def _fetch_audio(text: str) -> bytes:
 
 # ── Public interface ──────────────────────────────────────────────────────────
 
-#def speak(text: str) -> bool:
 """
     Convert text to speech and play chunk by chunk.
     Checks stop_event between every chunk — if set, stops immediately.
@@ -87,14 +86,17 @@ def speak(text: str) -> bool:
     print("[TTS] Playing...")
     stop_event.clear()
 
+    # play audio — non blocking
     sd.play(audio_array, samplerate=SAMPLE_RATE)
-
-    # watch for barge-in while audio plays in background
+    stop_event.clear()
+    # block manually but check stop_event every 50ms
     while sd.get_stream().active:
         if stop_event.is_set():
             sd.stop()
             print("[TTS] Interrupted.")
             return False
+        import time
+        time.sleep(0.05)  # check every 50ms
 
     print("[TTS] Done.")
     return True
