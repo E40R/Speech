@@ -12,6 +12,9 @@ def _barge_in_watcher(cancel_event: threading.Event):
     Runs in background during TTS playback.
     Sets stop_event if user speech detected → interrupts TTS.
     """
+    import time
+    time.sleep(0.5)  # wait 500ms before watching — lets listen() audio tail fade out
+    
     get_vad_model()
 
     with sd.InputStream(
@@ -20,11 +23,9 @@ def _barge_in_watcher(cancel_event: threading.Event):
         dtype="float32",
         blocksize=CHUNK_SIZE,
     ) as stream:
-
         while not cancel_event.is_set():
             chunk, _ = stream.read(CHUNK_SIZE)
             chunk = chunk.flatten()
-
             if is_speech(chunk):
                 print("[BARGE-IN] User interrupted!")
                 stop_event.set()
@@ -51,7 +52,7 @@ def run():
         log_to_json(user_input, triage_result)
 
         # 4. Generate TTS script
-        tts_text = generate_tts_response(triage_result)
+        tts_text = triage_result.recommendations
         print(f"\nAssistant: {tts_text}\n")
 
         # 5. Start barge-in watcher
