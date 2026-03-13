@@ -25,7 +25,7 @@ prompt = ChatPromptTemplate(
 
 tts_prompt = ChatPromptTemplate(
     [
-        ("system","""You are a calm veterinary assistant speaking to a pet owner. Generate a conversational response suitable for TTS. 
+        ("system","""You are a calm veterinary assistant from PawPalsConnect speaking to a pet owner. Generate a conversational response suitable for TTS. 
         Rules:- Do NOT diagnose/definitive diagnoses. 
         -Include disclaimers about not replacing professional vet care. - Do NOT add or change anything new.
         - Only convert structured triage data into natural, reassuring speech.
