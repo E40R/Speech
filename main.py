@@ -1,7 +1,7 @@
 import threading
 from STT_service import listen, is_speech, get_vad_model, CHUNK_SIZE, SAMPLE_RATE
 from TTS_service import speak, stop_event
-from LLM_brain import triagellm, generate_tts_response, update_history, log_to_json
+from LLM_brain import triagellm, generate_tts_response, update_history, log_to_json, log_conversation
 import sounddevice as sd
 
 
@@ -73,12 +73,12 @@ def run():
 
         # 8. Update history
         update_history(user_input, tts_text, triage_result)
-
+        log_conversation(user_input, tts_text)   #added this to have conversation histroy (this updates same file for each session)
+        
         # 9. If interrupted, loop back immediately
         if not completed:
             print("[Main] Barge-in detected, listening for new input...")
             continue
-
 
 if __name__ == "__main__":
     try:
