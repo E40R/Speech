@@ -1,4 +1,4 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_perplexity import ChatPerplexity
 from langchain_core.messages import HumanMessage, AIMessage
 from PromptTemplate import prompt, parser, tts_prompt
 from dotenv import load_dotenv
@@ -17,7 +17,7 @@ previous_key_details = []
 # ── LLM functions ─────────────────────────────────────────────────────────────
 
 def triagellm(user_input: str):
-    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
+    llm = ChatPerplexity(model="sonar", temperature=0)
     chain = prompt | llm | parser
     result = chain.invoke({
         "user_input": user_input,
@@ -27,7 +27,7 @@ def triagellm(user_input: str):
 
 
 def generate_tts_response(triage_result) -> str:
-    llm2 = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0.3)
+    llm2 = ChatPerplexity(model="sonar", temperature=0.3)
     chain = tts_prompt | llm2
     response = chain.invoke(str(triage_result))
     return response.content
