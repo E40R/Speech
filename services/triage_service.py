@@ -20,6 +20,8 @@ class TriageService(BaseModel):
             "green = non-urgent for example for hair loss.") )
     
     recommendations: str = Field(description="Clear, safety-aware guidance for the pet owner. Must escalate immediately when risk_level is emergency, red.")
-
+    
     safety_flags: List[str] = Field(description="Independent safety triggers detected from symptoms (e.g., 'bleeding_present').")
-    key_details: List[str] = Field(description="Key contextual items (pet name, age, general greeting, ect).")
+    
+    key_details: List[str] = Field(description="Key contextual items (age, names, greetings etc). Add NEW details only — do not repeat what's already in previous_context.")
+
