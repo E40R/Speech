@@ -53,3 +53,28 @@ def log_to_json(user_input: str, triage_result):
     data["timestamp"] = datetime.now().isoformat()
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+
+# ── Converstation log ───────────────────────────────────────────────────────────────
+SESSION_TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+def log_conversation(user_input: str, tts_text: str):
+    os.makedirs("outputs", exist_ok=True)
+    filename = f"outputs/conversation_{SESSION_TIMESTAMP}.json" #this creates one file per session instead of changing the same file each session
+
+    
+    entry = {
+        "timestamp": datetime.now().isoformat(),
+        "user": user_input,
+        "assistant": tts_text
+    }
+    
+    if os.path.exists(filename):
+        with open(filename, "r", encoding="utf-8") as f:
+            history = json.load(f)
+    else:
+        history = []
+    
+    history.append(entry)
+    
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(history, f, indent=2)
