@@ -1,7 +1,7 @@
 import threading
 from STT_service import listen, is_speech, get_vad_model, CHUNK_SIZE, SAMPLE_RATE
 from TTS_service import speak, stop_event
-from llm_brain import triagellm, generate_tts_response, update_history, log_to_json
+from LLM_brain import triagellm, generate_tts_response, update_history, log_to_json
 import sounddevice as sd
 
 
