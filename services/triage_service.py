@@ -19,7 +19,7 @@ class TriageService(BaseModel):
             "yellow = semi-urgent, like allergies,  "
             "green = non-urgent for example for hair loss.") )
     
-    recommendations: str = Field(description="Clear, safety-aware guidance for the pet owner. Must escalate immediately when risk_level is emergency, red.")
+    recommendations: str = Field(description="Clear, conversational guidance written directly to the pet owner in a warm, calm tone suitable for text-to-speech. Escalate immediately when risk_level is emergency. Include disclaimer about not replacing professional vet care. If no health concern, respond warmly to the conversation.")
     
     safety_flags: List[str] = Field(description="Independent safety triggers detected from symptoms (e.g., 'bleeding_present').")
     
